@@ -45,7 +45,7 @@ mutable struct labjackBuffer{N}
    buff::NTuple{N,UInt8}
 end
 
-const lib = "../LabjackU6Library/libU6.so"
+const lib = dirname(Base.find_package("LabjackU6Library")*"/libU6.so")
 include("u6ccalls.jl")
 
 end
