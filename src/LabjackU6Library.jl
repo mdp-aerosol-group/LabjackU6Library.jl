@@ -25,9 +25,16 @@ export
    u6CalibrationInfo,
    labjackBuffer
 
-### Data Types
-# Data Structure for U6 Calibration Information
-# The C equivalent is defined in u6.h
+
+"""
+   u6CalibrationInfo
+
+Data structure containing the calibration information
+ - prodID: productID
+ - hiRes: 
+ - ccConstants: calibration constants
+
+"""
 mutable struct u6CalibrationInfo
    prodID::UInt8
    hiRes::UInt8
