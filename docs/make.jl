@@ -16,3 +16,7 @@ makedocs(
   ]
 
 )
+
+deploydocs(
+    repo = "github.com/LabjackU6Library.jl.git"
+)
