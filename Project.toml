@@ -3,6 +3,3 @@ uuid = "13a5dcd1-fa46-5f5c-a4e8-ed6ffcaaca62"
 
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
-
-[compat]
-Documenter = "~0.20"
