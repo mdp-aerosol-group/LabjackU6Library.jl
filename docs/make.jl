@@ -18,5 +18,5 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/LabjackU6Library.jl.git"
+    repo = "github.com/mdpetters/LabjackU6Library.jl.git"
 )
