@@ -28,7 +28,7 @@ end
 
 Closes USB connection to Labjack with HANDLE.
 
-# Examples
+# Example
 ```julia-repl
 julia> closeUSBConnection(HANDLE)
 ```
@@ -37,7 +37,16 @@ function closeUSBConnection(HANDLE)
     ccall((:closeUSBConnection,  lib), Nothing, (Ptr{u6CalibrationInfo},), HANDLE)
 end
 
-# Read out calibration information from Device
+"""
+    getCalibrationInformation(HANDLE)
+
+Retrieves calibration 
+
+# Example
+```julia-repl
+julia> caliInfo = getCalibrationInformation(HANDLE)
+```
+"""
 function getCalibrationInformation(HANDLE)
      caliInfo = u6CalibrationInfo(UInt8(1), UInt8(1),
 								  NTuple{40,Float64}(0 for i in 1:40))
@@ -62,18 +71,62 @@ function extendedChecksum!(sendIt)
           (Ref{labjackBuffer}, Cint), sendIt, length(sendIt.buff))
 end
 
+"""
+    labjackSend(HANDLE,sendIt)
+
+Sends package sendIt to device. See example in the examples directory and the 
+LabJack documentation on how to construct the buffer
+
+"""
 function labjackSend(HANDLE,sendIt)
     ccall((:LJUSB_Write, lib), Culong,
           (Ptr{Nothing}, Ref{labjackBuffer}, Culong),
 		  HANDLE, sendIt, length(sendIt.buff))
 end
 
+"""
+    labjackRead!(HANDLE,recordIt)
+
+Reads the return package from the device and stores it in recordIt. 
+See example in the examples directory and the LabJack documentation on how to construct 
+the recordIt buffer and how to interpret the output.
+
+"""
 function labjackRead!(HANDLE,recordIt)
     ccall((:LJUSB_Read, lib), Culong,
           (Ptr{Nothing}, Ref{labjackBuffer}, Culong),
 		  HANDLE, recordIt, length(recordIt.buff))
 end
 
+"""
+    labjackStream!(HANDLE,recordIt)
+
+Reads the return package from the device in streaming mode and stores it in recordIt. 
+See example in the examples directory and the LabJack documentation on how to construct 
+the recordIt buffer and how to interpret the output.
+
+"""
+function labjackStream!(HANDLE,recordIt)
+    ccall((:LJUSB_Stream, lib), Culong,
+          (Ptr{Nothing}, Ref{labjackBuffer}, Culong),
+		  HANDLE, recordIt, length(recordIt.buff))
+end
+
+"""
+    calibrateAIN(caliInfo,recordIt,resIn,gainIn,bits24,i,j,k)
+
+Calibrates the voltage from the AIN reads. See example in the examples directory and 
+the LabJack documentation on how to pick i,j,k for each channel (which depends on the 
+structure of the recordIt package). Also see u6Feedback.c for another example.
+
+ - caliInfo is the calibration data
+ - recordIt is the package retrieved
+ - resIn is the resolution of the voltage read
+ - gainIN is he gain setting
+ - bits24 is the bit setting
+ - i,j,k are indices corresponding to the return bytes for the channel
+
+"""
 function calibrateAIN(caliInfo,recordIt,resIn,gainIn,bits24,i,j,k)
     foo = Cdouble(0)
     bytesV = recordIt.buff[i] + recordIt.buff[j]*256 + recordIt.buff[k]*65536

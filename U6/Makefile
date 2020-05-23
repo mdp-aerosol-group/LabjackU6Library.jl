@@ -1,7 +1,7 @@
 #
 # Makefile for U3 examples
 #
-U6EFUNCTIONS_SRC=u6EFunctions.c u6.c u6Feedback.c u6LJTDAC.c
+U6EFUNCTIONS_SRC=u6EFunctions.c u6.c u6Feedback.c u6LJTDAC.c u6Stream.c
 U6EFUNCTIONS_OBJ=libU6.so
 
 SRCS=$(wildcard *.c)

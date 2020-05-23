@@ -19,10 +19,12 @@ export
    extendedChecksum!,             # Computes checksum
    labjackSend,                   # Send buffer to Labjack
    labjackRead!,                  # Read buffer from Labjack
+   labjackStream!,                # Stream buffer from Labjack
    calibrateAIN                   # Calibrates AIN signal
 
 export
    u6CalibrationInfo,
+   u6TDACCalibrationInfo,
    labjackBuffer
 
 
@@ -55,7 +57,7 @@ mutable struct u6TDACCalibrationInfo
 end
 
 """
-   u6TDACCalibrationInfo
+   labjackBuffer
 
 Generic Buffer structure to send and receive data via Hardware calls
 NTuple{N,UInt8}
@@ -65,8 +67,7 @@ mutable struct labjackBuffer{N}
    buff::NTuple{N,UInt8}
 end
 
-#const lib = dirname(Base.find_package("LabjackU6Library"))*"/libU6.so"
-const lib = pwd()*"/libU6.so"
+const lib = dirname(Base.find_package("LabjackU6Library"))*"/libU6.so"
 include("u6ccalls.jl")
 
 end
