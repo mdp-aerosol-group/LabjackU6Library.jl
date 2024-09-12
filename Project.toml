@@ -1,5 +1,10 @@
 name = "LabjackU6Library"
 uuid = "13a5dcd1-fa46-5f5c-a4e8-ed6ffcaaca62"
+authors = ["Markus Petters <markus.petters@ucr.edu>"]
+version = "0.1.0"
 
-[deps]
+[compat]
+julia = "1"
+
+[extras]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
